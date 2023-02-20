@@ -9,8 +9,7 @@ const rocks = [
 // map
 
 const rocksAgedOneYear = rocks.map(rock => {
-    rock.age++;
-    return rock;
+    return {...rock, age: rock.age + 1};
 });
 
 console.log(rocks);
