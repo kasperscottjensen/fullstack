@@ -41,6 +41,7 @@ app.get('/birds/:id', (req, res) => {
 });
 
 app.post('/birds', [
+        body('id').not().exists(),
         body('name').isString(),
         body('rarity').isNumeric()
     ], (req, res) => {
@@ -56,6 +57,7 @@ app.post('/birds', [
 });
 
 app.put('/birds/:id', [
+    body('id').not().exists(),
     body('name').isString(),
     body('rarity').isNumeric()
 ], (req, res) => {
@@ -74,6 +76,7 @@ app.put('/birds/:id', [
 });
 
 app.patch('/birds/:id', [
+    body('id').not().exists(),
     body('name').optional().isString(),
     body('rarity').optional().isNumeric()
 ], (req, res) => {
@@ -92,8 +95,7 @@ app.patch('/birds/:id', [
 });
 
 app.delete('/birds/:id', (req, res) => {
-    const birdToDelete = birds.find(bird => bird.id === Number(req.params.id));
-    const index = birds.indexOf(birdToDelete);
+    const index = birds.findIndex(bird => bird.id === Number(req.params.id));
     if (index === -1) {
         res.status(400).json({status: "resource not found"});
     } else {
